@@ -5,8 +5,10 @@ import { getStore } from "@/lib/store";
 import { buildStreetStats, voteScore } from "@/lib/stats";
 import { isStaff } from "@/lib/session";
 import { parseSegmentCode } from "@/lib/segments";
+import { isPublicPhoto } from "@/lib/types";
 import { Card, Notice, ScoreBar, Section, StatusBadge } from "@/components/ui";
 import StatusEditor from "@/components/StatusEditor";
+import PhotoDecision from "@/components/PhotoDecision";
 
 export const dynamic = "force-dynamic";
 
@@ -33,7 +35,7 @@ export default async function StreetPage({
   if (!street) notFound();
 
   const [stats] = buildStreetStats([street], votes, photos, statuses, quarters);
-  const visiblePhotos = photos.filter((p) => p.status === "approved" || staff);
+  const visiblePhotos = photos.filter((p) => isPublicPhoto(p) || staff);
   const reasons = votes
     .filter((v) => v.reason.trim().length > 0)
     .sort((a, b) => b.updatedAt.localeCompare(a.updatedAt))
@@ -78,7 +80,7 @@ export default async function StreetPage({
         </div>
         <div className="card flex-1 p-3 text-center">
           <div className="text-[24px] font-semibold tabular-nums text-accent">
-            {visiblePhotos.filter((p) => p.status === "approved").length}
+            {visiblePhotos.filter(isPublicPhoto).length}
           </div>
           <div className="text-[13px] text-ink-soft">תמונות</div>
         </div>
@@ -166,6 +168,13 @@ export default async function StreetPage({
                     {photo.status === "pending" ? "ממתינה לאישור" : "נדחתה"}
                   </p>
                 ) : null}
+                {photo.source !== "resident" ? (
+                  <p className="px-2 py-1 text-[12px] text-ink-faint">
+                    {photo.source === "example" ? "דוגמה של האגף" : "בדיקה, לא מוצגת לציבור"}
+                  </p>
+                ) : null}
+                {/* Staff and admin decide from here too, not only from the queue. */}
+                {staff ? <PhotoDecision photoId={photo.id} status={photo.status} /> : null}
               </li>
             ))}
           </ul>
