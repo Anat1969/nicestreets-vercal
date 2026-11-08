@@ -29,6 +29,7 @@ import { scoreLabel } from "@/lib/hebrew";
 import { summarise } from "@/lib/summary";
 import MyPendingPhoto from "@/components/MyPendingPhoto";
 import Rich from "@/components/Rich";
+import QuarterIcon from "@/components/QuarterIcon";
 import StreetNameWiki from "@/components/StreetNameWiki";
 import RateCta from "@/components/RateCta";
 import { FamilyMark, criterionFill } from "@/components/CriteriaMark";
@@ -178,6 +179,7 @@ export default async function StreetPage({
       />
 
       <p className="street-meta">
+        {street.quarterId ? <QuarterIcon id={street.quarterId} size={22} className="text-accent" /> : null}
         <span>{stats.quarterName}</span>
         <span aria-hidden="true">·</span>
         <span>
