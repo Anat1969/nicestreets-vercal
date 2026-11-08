@@ -175,7 +175,7 @@
 }
 .ex-tag {
   display: inline-flex;
-  min-height: 32px;
+  min-height: 44px;
   align-items: center;
   padding: 0 10px;
   font-size: 13px;
