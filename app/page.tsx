@@ -19,7 +19,6 @@ import HomeHero from "@/components/HomeHero";
 import Rich from "@/components/Rich";
 import { GLYPHS, type GlyphKey } from "@/components/glyphs";
 import {
-  ButtonLink,
   Card,
   Counter,
   DemoBanner,

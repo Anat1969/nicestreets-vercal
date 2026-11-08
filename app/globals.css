@@ -2512,3 +2512,26 @@ textarea.resident-voice {
     opacity: 0;
   }
 }
+.type-details {
+  border: 1px solid var(--color-line);
+  border-radius: 12px;
+  background: var(--color-surface);
+  padding: 4px 12px 10px;
+}
+.type-summary {
+  display: grid;
+  gap: 2px;
+  min-height: 52px;
+  padding: 8px 0 4px;
+  cursor: pointer;
+  list-style: none;
+}
+.type-summary::after {
+  content: "פתיחה ▾";
+  font-size: 13px;
+  color: var(--color-accent);
+  text-decoration: underline;
+}
+.type-details[open] .type-summary::after {
+  content: "סגירה ▴";
+}

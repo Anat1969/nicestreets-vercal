@@ -47,8 +47,8 @@ interface Props {
  * שנבחר ומה ייצא ממנו) בלוח צבוע עם התווית "התוצאה".
  */
 const STEPS = [
-  { n: 1, title: "בוחרים רחוב" },
-  { n: 2, title: "עונים על 7 שאלות" },
+  { n: 1, title: "רחוב" },
+  { n: 2, title: "7 שאלות" },
   { n: 3, title: "מילים ותמונה" },
 ];
 
@@ -290,12 +290,18 @@ export default function ChooseFlow({
           ) : null}
 
           {selected ? (
+            <details className="type-details" open={Boolean(typologySuggestion) || !selected.typology}>
+              <summary className="type-summary">
+                <span className="field-label">
+                  לדעתכם הסוג אחר? <span className="opt">(לא חובה)</span>
+                </span>
+                <span className="field-help">
+                  {typologies.length} סוגי רחובות, ומה מאפיין כל אחד. אם הסוג שלמעלה נכון, אפשר לדלג.
+                </span>
+              </summary>
             <fieldset className="field">
-              <legend className="field-label">
-                לדעתכם, איזה סוג רחוב זה? <span className="opt">(לא חובה)</span>
-              </legend>
+              <legend className="sr-only">איזה סוג רחוב זה?</legend>
               <p className="field-help">הסוג קובע מול אילו רחובות משווים את הרחוב.</p>
-              <p className="field-help">אם הסוג שלמעלה נכון, אפשר לדלג.</p>
               <div className="type-grid">
                 {typologies.map((t) => (
                   <label key={t.key} className="type-option" data-current={selected.typology === t.key || undefined}>
@@ -320,6 +326,7 @@ export default function ChooseFlow({
                 </button>
               ) : null}
             </fieldset>
+            </details>
           ) : null}
 
           <div className="next-step">
